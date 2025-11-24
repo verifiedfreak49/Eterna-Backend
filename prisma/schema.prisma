@@ -1,0 +1,31 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Order {
+  id            String   @id @default(uuid()) @db.Uuid
+  tokenIn       String   @db.VarChar(255)
+  tokenOut      String   @db.VarChar(255)
+  amountIn      String   @db.VarChar(255) // Using String to handle large numbers/precision
+  dexUsed       String?  @db.VarChar(100)
+  executedPrice String?  @db.VarChar(255)
+  txHash        String?  @db.VarChar(255)
+  status        String   @db.VarChar(50)
+  statusHistory Json     @default("[]") // Array of status transitions with timestamps
+  failureReason String?  @db.Text
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
+  @@map("orders")
+}
+

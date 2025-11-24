@@ -1,0 +1,89 @@
+{
+  "info": {
+    "name": "Eterna Order Execution Engine",
+    "description": "API collection for Order Execution Engine",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["health"]
+        }
+      }
+    },
+    {
+      "name": "Execute Order",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"tokenIn\": \"SOL\",\n  \"tokenOut\": \"USDC\",\n  \"amountIn\": \"100\",\n  \"orderType\": \"market\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/orders/execute",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "orders", "execute"]
+        }
+      }
+    },
+    {
+      "name": "Get Order by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/orders/:orderId",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "orders", ":orderId"],
+          "variable": [
+            {
+              "key": "orderId",
+              "value": "your-order-id-here"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get All Orders",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/orders?status=pending&limit=100",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "orders"],
+          "query": [
+            {
+              "key": "status",
+              "value": "pending"
+            },
+            {
+              "key": "limit",
+              "value": "100"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    }
+  ]
+}
+
