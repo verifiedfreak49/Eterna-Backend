@@ -63,6 +63,7 @@ describe("Order Execution Integration", () => {
     expect(["confirmed", "failed"]).toContain(order.status);
 
     // Verify status history
+    
     const statusHistory = order.statusHistory as Array<{
       status: string;
       timestamp: string;

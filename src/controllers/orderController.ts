@@ -58,6 +58,15 @@ export async function executeOrder(
     const orderId = uuidv4();
 
     // Create order in database with initial "pending" status
+
+    const initialStatusHistory = [
+      {
+        status : "pending",
+        timestamp: new Date().toISOString(),
+        metadata: {},
+      },
+    ];
+
     const order = await prisma.order.create({
       data: {
         id: orderId,
@@ -65,13 +74,7 @@ export async function executeOrder(
         tokenOut,
         amountIn,
         status: "pending",
-        statusHistory: [
-          {
-            status: "pending",
-            timestamp: new Date().toISOString(),
-            metadata: {},
-          },
-        ],
+        statusHistory: JSON.stringify(initialStatusHistory),
       },
     });
 

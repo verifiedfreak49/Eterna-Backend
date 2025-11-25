@@ -6,7 +6,9 @@ export function getRedisClient(): Redis {
   if (!redis) {
     const redisUrl = process.env.REDIS_URL || "redis://localhost:6379";
     redis = new Redis(redisUrl, {
-      maxRetriesPerRequest: 3,
+      // BullMQ requires this to be null
+      maxRetriesPerRequest: null,
+      // Optional: keep a simple retryStrategy if you want reconnect attempts
       retryStrategy: (times) => {
         const delay = Math.min(times * 50, 2000);
         return delay;
@@ -29,4 +31,3 @@ export async function disconnectRedis(): Promise<void> {
     await redis.quit();
   }
 }
-
